@@ -1,0 +1,45 @@
+*{
+    margin: 0;
+    padding: 0;
+    background-color: #E1D7B7;
+    /* font-family: ; */
+}
+
+h1{
+    text-align: center;
+    color: #1E2A5E;
+}
+
+.content div{
+    padding-top: 20px;
+    text-align: center;
+}
+.content div h2{
+    /* display: inline-block; */
+}
+#RecentEntries{
+    width: 80px;
+}
+#Nbutton{
+    background-color: #7C93C3;
+    color: #E1D7B7;
+    padding: 0;
+    border: none;
+    width: 100px;
+    height: 30px;
+    border-radius: 10px;
+}
+#NthRecentEntries{
+    display: flex;
+    flex-direction: column; 
+    align-items: center;    
+    margin-bottom: 10px;
+}
+#myChart{
+    width: 50px;
+    max-width: 700px;
+}
+#RecentEntries{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}

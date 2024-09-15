@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LoRa Server</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <header>
+        <h1>CrowdSense Data Visualiser</h1>
+    </header>
+
+    <section class="content">
+        <div class="Entries">
+            <h2 id="Rows">Entries</h2>
+        </div>
+        <div id="NthRecentEntries">
+            <h2 id="entries">Recent 100 Entries</h2>
+            <canvas id="myChart"></canvas>
+            <input id = "RecentEntries" type="number">
+            <button id="Nbutton">Change Entries</button>
+            <p id = "Debug"></p>
+        </div>
+    </section>
+    <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
+    </script>
+    <script src="script.js"></script>
+    
+</body>
+</html>
