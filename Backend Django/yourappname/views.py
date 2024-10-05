@@ -7,6 +7,7 @@ from rest_framework import generics, status
 from rest_framework.decorators import api_view
 from django.http import JsonResponse
 from django.views import View
+import requests, math
 
 def hello(request):
     return HttpResponse("Hello, world. You're at the polls index.")
@@ -20,6 +21,7 @@ def getRecentNRows(request):
         recent_locations = location.objects.all().values('latitude', 'longitude')[:n]
         data = list(recent_locations)
         return JsonResponse(data, safe=False)
+    
     
 @api_view(['POST', 'GET'])
 def tododevice(request):
@@ -121,6 +123,50 @@ class GetNRowsView(View):
     def get(self, request):
         n = int(request.GET.get('n', 10))
         if(request.method == 'GET'):
-            recent_locations = location.objects.all().values('latitude', 'longitude')[:n]
+            recent_locations = location.objects.all().order_by('-id').values('latitude', 'longitude')[:n]
             data = list(recent_locations)
+          
             return JsonResponse(data, safe=False)
+        
+class GetCoordinates(View):
+    def get(self, request):
+        n = int(request.GET.get('n', 10))
+        if(request.method == 'GET'):
+            recent_locations = location.objects.all().order_by('-id').values('latitude', 'longitude')[:n]
+            data = list(recent_locations)
+            coordinates = getCoordinates(recent_locations)
+            return JsonResponse(coordinates, safe=False)
+        
+
+def getCoordinates(locations):
+    
+    coordinates = []
+    for location in locations:
+        lat = float(location['latitude'])
+        lon = float(location['longitude'])
+        # h = getElevation(lat, lon)
+       
+        x = (6371)*math.cos(math.radians(lat))*math.cos(math.radians(lon))
+        y = (6371)*math.cos(math.radians(lat))*math.sin(math.radians(lon))
+        z = (6371)*math.sin(math.radians(lat))
+        coord_dict = {'x':x, 'y':y, 'z':z}
+        coordinates.append(coord_dict)
+        
+    return coordinates
+
+def getElevation(lat, lon):
+
+    url = f'https://api.open-elevation.com/api/v1/lookup?locations={lat},{lon}'
+
+    try:
+       response = requests.get(url)
+       
+       if response.status_code == 200:
+            data = response.json()
+            if 'results' in data and len(data['results']) > 0:
+                
+                return data['results'][0]['elevation']
+       
+    except requests.exceptions.RequestException as e:
+
+        return JsonResponse({'error': str(e)}, status=500)

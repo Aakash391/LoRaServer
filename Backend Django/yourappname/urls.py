@@ -6,7 +6,7 @@ from .views import locationGetDevice, locationUpdateDeleteDevice
 from .views import tododevice
 from .views import tododevice2
 from .views import Riss
-from .views import GetRowsView, GetNRowsView
+from .views import GetRowsView, GetNRowsView, GetCoordinates
 
 urlpatterns = [
     path('hello/', views.hello, name='hello'),
@@ -19,5 +19,6 @@ urlpatterns = [
     path('riss/', Riss ), #correct working api
     path('tododevicelocation2/', tododevice2),
     path('getRows/', GetRowsView.as_view(), name='getRows'),
-    path('getNRows/', GetNRowsView.as_view(), name='getNrows')
+    path('getNRows/', GetNRowsView.as_view(), name='getNrows'),
+    path('getNCoord/', GetCoordinates.as_view(), name='getNCoord')
 ]
